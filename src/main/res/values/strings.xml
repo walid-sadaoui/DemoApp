@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DemoApp</string>
+    <string name="arfcn">ARFCN</string>
+    <string name="channelNumber">-</string>
+    <string name="bsic">BSIC</string>
+    <string name="rxLev">RxLev</string>
+    <string name="c1">C1</string>
+    <string name="c2">C2</string>
+    <string name="bsicValue">-</string>
+    <string name="rxLevValue">-</string>
+    <string name="c1Value">-</string>
+    <string name="c2Value">-</string>
+</resources>
