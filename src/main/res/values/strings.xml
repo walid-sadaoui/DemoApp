@@ -10,4 +10,15 @@
     <string name="rxLevValue">-</string>
     <string name="c1Value">-</string>
     <string name="c2Value">-</string>
+    <string name="servingCell">Serving Cell</string>
+    <string name="mcc">MCC</string>
+    <string name="mccValue">-</string>
+    <string name="mnc">MNC</string>
+    <string name="mncValue">-</string>
+    <string name="cid">CID</string>
+    <string name="cidValue">-</string>
+    <string name="lacValue">-</string>
+    <string name="lac">LAC</string>
+    <string name="cid">CID</string>
+    <string name="networkOperator">FREE</string>
 </resources>

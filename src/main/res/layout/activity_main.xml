@@ -26,6 +26,20 @@
             android:minHeight="0dp">
 
             <TextView
+                android:id="@+id/title_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/servingCell"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@id/channel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/channelValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/bsic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/title_text" />
 
             <TextView
                 android:id="@+id/bsic"
@@ -61,7 +75,8 @@
                 app:layout_constraintBottom_toTopOf="@id/bsicValue"
                 app:layout_constraintEnd_toStartOf="@id/rxLev"
                 app:layout_constraintStart_toEndOf="@id/channel"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/channel"
+                />
 
             <TextView
                 android:id="@+id/rxLev"
@@ -73,7 +88,7 @@
                 app:layout_constraintBottom_toTopOf="@id/rxLevValue"
                 app:layout_constraintEnd_toStartOf="@id/c1"
                 app:layout_constraintStart_toEndOf="@id/bsic"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/channel" />
 
             <TextView
                 android:id="@+id/c1"
@@ -85,7 +100,7 @@
                 app:layout_constraintBottom_toTopOf="@id/c1Value"
                 app:layout_constraintEnd_toStartOf="@id/c2"
                 app:layout_constraintStart_toEndOf="@id/rxLev"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/channel" />
 
             <TextView
                 android:id="@+id/c2"
@@ -97,7 +112,7 @@
                 app:layout_constraintBottom_toTopOf="@id/c2Value"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/c1"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/channel" />
 
             <TextView
                 android:id="@+id/bsicValue"

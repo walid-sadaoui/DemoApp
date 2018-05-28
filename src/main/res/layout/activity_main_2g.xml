@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/servingCell"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="-"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/title_text"
+                app:layout_constraintStart_toEndOf="@id/title_text"
+                app:layout_constraintTop_toTopOf="@+id/title_text" />
+
+            <TextView
+                android:id="@+id/networkType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="GSM"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/title_text"
+                app:layout_constraintStart_toEndOf="@+id/separator"
+                app:layout_constraintTop_toTopOf="@+id/title_text" />
+
+            <TextView
+                android:id="@+id/channel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/arfcn"
+                app:layout_constraintBottom_toTopOf="@+id/channelValue"
+                app:layout_constraintEnd_toStartOf="@id/bsic"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+            <TextView
+                android:id="@+id/channelValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/channelNumber"
+                app:layout_constraintEnd_toEndOf="@+id/channel"
+                app:layout_constraintStart_toStartOf="@+id/channel"
+                app:layout_constraintTop_toBottomOf="@+id/channel" />
+
+            <TextView
+                android:id="@+id/bsic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bsic"
+                app:layout_constraintBottom_toBottomOf="@+id/channel"
+                app:layout_constraintEnd_toStartOf="@id/rxLev"
+                app:layout_constraintStart_toEndOf="@id/channel"
+                app:layout_constraintTop_toTopOf="@+id/channel" />
+
+            <TextView
+                android:id="@+id/bsicValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/bsicValue"
+                app:layout_constraintEnd_toEndOf="@+id/bsic"
+                app:layout_constraintStart_toStartOf="@+id/bsic"
+                app:layout_constraintTop_toBottomOf="@id/bsic" />
+
+            <TextView
+                android:id="@+id/rxLev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rxLev"
+                app:layout_constraintBottom_toTopOf="@id/rxLevValue"
+                app:layout_constraintEnd_toStartOf="@id/c1"
+                app:layout_constraintStart_toEndOf="@id/bsic"
+                app:layout_constraintTop_toTopOf="@id/channel" />
+
+            <TextView
+                android:id="@+id/rxLevValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rxLevValue"
+                app:layout_constraintEnd_toEndOf="@+id/rxLev"
+                app:layout_constraintStart_toStartOf="@+id/rxLev"
+                app:layout_constraintTop_toBottomOf="@id/rxLev" />
+
+            <TextView
+                android:id="@+id/c1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/c1"
+                app:layout_constraintBottom_toTopOf="@id/c1Value"
+                app:layout_constraintEnd_toStartOf="@id/c2"
+                app:layout_constraintStart_toEndOf="@id/rxLev"
+                app:layout_constraintTop_toTopOf="@id/channel" />
+
+            <TextView
+                android:id="@+id/c1Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/c1Value"
+                app:layout_constraintEnd_toEndOf="@+id/c1"
+                app:layout_constraintStart_toStartOf="@+id/c1"
+                app:layout_constraintTop_toBottomOf="@id/c1" />
+
+            <TextView
+                android:id="@+id/c2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/c2"
+                app:layout_constraintBottom_toTopOf="@id/c2Value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/c1"
+                app:layout_constraintTop_toTopOf="@id/channel" />
+
+            <TextView
+                android:id="@+id/c2Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/c2Value"
+                app:layout_constraintEnd_toEndOf="@+id/c2"
+                app:layout_constraintStart_toStartOf="@+id/c2"
+                app:layout_constraintTop_toBottomOf="@id/c2" />
+
+            <TextView
+                android:id="@+id/mcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/mcc"
+                app:layout_constraintBottom_toTopOf="@id/mccValue"
+                app:layout_constraintEnd_toStartOf="@id/mnc"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/channelValue" />
+
+            <TextView
+                android:id="@+id/mccValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mccValue"
+                app:layout_constraintEnd_toEndOf="@+id/mcc"
+                app:layout_constraintStart_toStartOf="@+id/mcc"
+                app:layout_constraintTop_toBottomOf="@id/mcc" />
+
+            <TextView
+                android:id="@+id/mnc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mnc"
+                app:layout_constraintBottom_toBottomOf="@+id/mcc"
+                app:layout_constraintEnd_toStartOf="@id/lac"
+                app:layout_constraintStart_toEndOf="@id/mcc"
+                app:layout_constraintTop_toTopOf="@+id/mcc" />
+
+            <TextView
+                android:id="@+id/mncValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mncValue"
+                app:layout_constraintEnd_toEndOf="@+id/mnc"
+                app:layout_constraintStart_toStartOf="@+id/mnc"
+                app:layout_constraintTop_toBottomOf="@id/mnc" />
+
+            <TextView
+                android:id="@+id/lac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lac"
+                app:layout_constraintBottom_toBottomOf="@+id/mnc"
+                app:layout_constraintEnd_toStartOf="@id/cid"
+                app:layout_constraintStart_toEndOf="@id/mnc"
+                app:layout_constraintTop_toTopOf="@+id/mnc" />
+
+            <TextView
+                android:id="@+id/lacValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lacValue"
+                app:layout_constraintEnd_toEndOf="@id/lac"
+                app:layout_constraintStart_toStartOf="@id/lac"
+                app:layout_constraintTop_toBottomOf="@+id/lac" />
+
+            <TextView
+                android:id="@+id/cid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cid"
+                app:layout_constraintBottom_toBottomOf="@+id/lac"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/lac"
+                app:layout_constraintTop_toTopOf="@+id/lac" />
+
+            <TextView
+                android:id="@+id/cidValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cidValue"
+                app:layout_constraintEnd_toEndOf="@id/cid"
+                app:layout_constraintStart_toStartOf="@id/cid"
+                app:layout_constraintTop_toBottomOf="@id/cid" />
+
+            <TextView
+                android:id="@+id/networkOperator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/networkOperator"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/networkType"
+                app:layout_constraintStart_toEndOf="@id/networkType"
+                app:layout_constraintTop_toTopOf="@+id/networkType" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView" />
+</android.support.constraint.ConstraintLayout>
