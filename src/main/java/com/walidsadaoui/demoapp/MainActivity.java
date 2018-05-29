@@ -10,11 +10,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoWcdma;
+import android.telephony.CellLocation;
+import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
+import android.telephony.ServiceState;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
@@ -23,8 +29,10 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity  {
+
+public class MainActivity extends AppCompatActivity {
 
     /**
      * Request codes for permissions
@@ -32,66 +40,101 @@ public class MainActivity extends AppCompatActivity  {
     private static final int REQUEST_CODE_FINE_LOCATION = 1;
     private static final int REQUEST_CODE_COARSE_LOCATION = 2;
 
+    /**
+     * RecyclerView elements
+     */
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    /**
+     * UI Widgets
+     */
+    TextView arfcn;
+    TextView mcc;
+    TextView mnc;
+    TextView lac;
+    TextView cid;
+    TextView networkType;
+
     TelephonyManager mTelephonyManager;
     PhoneStateListener mPhoneStateListener;
     CellInfo servingCell;
+    List<CellInfo> neighbouringCells;
 
-    @SuppressLint("MissingPermission")
+    //@SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2g);
 
-        //UI Widgets
-        TextView arfcn = (TextView) findViewById(R.id.channelValue);
-        TextView mcc = (TextView) findViewById(R.id.mccValue);
-        TextView mnc = (TextView) findViewById(R.id.mncValue);
-        TextView lac = (TextView) findViewById(R.id.lacValue);
-        TextView cid = (TextView) findViewById(R.id.cidValue);
-        TextView networkType = (TextView) findViewById(R.id.networkType);
+        //Locate the UI Widgets
+        arfcn = (TextView) findViewById(R.id.channelValue);
+        mcc = (TextView) findViewById(R.id.mccValue);
+        mnc = (TextView) findViewById(R.id.mncValue);
+        lac = (TextView) findViewById(R.id.lacValue);
+        cid = (TextView) findViewById(R.id.cidValue);
+        networkType = (TextView) findViewById(R.id.networkType);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
 
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
-        mPhoneStateListener = new PhoneStateListener();
+        mPhoneStateListener = new PhoneStateListener() {
+
+            @Override
+            public void onCellInfoChanged(List<CellInfo> cellInfo) {
+                super.onCellInfoChanged(cellInfo);
+                // TODO : update servingCell
+                // TODO : update neighbouringCells
+                Log.i("GEND'BTS", "Serving Cell updated : "); //+ cellInfo.toString());
+                updateUI();
+            }
+
+            @Override
+            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                super.onSignalStrengthsChanged(signalStrength);
+                // TODO : update servingCell
+                // TODO : update neighbouringCells
+                Log.i("GEND'BTS", "Signal Strength Changed" + signalStrength.toString());
+                updateUI();
+            }
+
+            @Override
+            public void onCellLocationChanged(CellLocation location) {
+                super.onCellLocationChanged(location);
+                @SuppressLint("MissingPermission") List<NeighboringCellInfo> neighbouringCellList = mTelephonyManager.getNeighboringCellInfo();
+                Log.i("GEND'BTS", "Cell Location Changed" + location.toString());
+            }
+
+            @Override
+            public void onServiceStateChanged(ServiceState serviceState) {
+                super.onServiceStateChanged(serviceState);
+                Log.i("GEND'BTS", "Service State Changed" + serviceState.toString());
+            }
+        };
 
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_INFO
                 | PhoneStateListener.LISTEN_CELL_LOCATION | PhoneStateListener.LISTEN_SIGNAL_STRENGTHS
-                | PhoneStateListener.LISTEN_SERVICE_STATE | PhoneStateListener.LISTEN_NONE);
+                | PhoneStateListener.LISTEN_SERVICE_STATE);
         Log.i("GEND'BTS", "Network type = " + getNetworkClass(this));
 
-        networkType.setText(getNetworkClass(this));
 
-        //TODO : create method getServingCell()
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        getServingCell();
+        getNeighbouringCells();
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    REQUEST_CODE_COARSE_LOCATION);
-        } else  {
-            servingCell = mTelephonyManager.getAllCellInfo().get(0);
-        }
-
-
-        switch (getNetworkClass(this)) {
-            case "2G":
-                mcc.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getMcc()));
-                mnc.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getMnc()));
-                lac.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getLac()));
-                cid.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getCid()));
-                //((CellInfoGsm) servingCell).getCellSignalStrength();
-                return;
-            case "3G":
-                servingCell = (CellInfoWcdma) servingCell;
-                ((CellInfoWcdma) servingCell).getCellIdentity();
-                ((CellInfoWcdma) servingCell).getCellSignalStrength();
-                return;
-            case "4G":
-                servingCell = (CellInfoLte) servingCell;
-                ((CellInfoLte) servingCell).getCellIdentity();
-                ((CellInfoLte) servingCell).getCellSignalStrength();
-                return;
-        }
-
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(neighbouringCells);
+        mRecyclerView.setAdapter(mAdapter);
+        Log.i("GEND'BTS", "Serving Cell : " + servingCell.toString());
+        updateUI();
 
 
     }
@@ -209,13 +252,50 @@ public class MainActivity extends AppCompatActivity  {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUEST_CODE_COARSE_LOCATION);
-        } else  {
+        } else {
             servingCell = mTelephonyManager.getAllCellInfo().get(0);
         }
         return servingCell;
     }
 
+    public List<CellInfo> getNeighbouringCells() {
+        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_CODE_COARSE_LOCATION);
+        } else {
+            neighbouringCells = mTelephonyManager.getAllCellInfo();
+        }
+        return neighbouringCells;
+    }
+
     public void updateUI() {
+
+        networkType.setText(getNetworkClass(this));
+
+        switch (getNetworkClass(this)) {
+            case "2G":
+                mcc.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getMcc()));
+                mnc.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getMnc()));
+                lac.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getLac()));
+                cid.setText(String.valueOf(((CellInfoGsm) servingCell).getCellIdentity().getCid()));
+                //((CellInfoGsm) servingCell).getCellSignalStrength();
+                return;
+            case "3G":
+                servingCell = (CellInfoWcdma) servingCell;
+                mcc.setText(String.valueOf(((CellInfoWcdma) servingCell).getCellIdentity().getMcc()));
+                mnc.setText(String.valueOf(((CellInfoWcdma) servingCell).getCellIdentity().getMnc()));
+                lac.setText(String.valueOf(((CellInfoWcdma) servingCell).getCellIdentity().getLac()));
+                cid.setText(String.valueOf(((CellInfoWcdma) servingCell).getCellIdentity().getCid()));
+                return;
+            case "4G":
+                servingCell = (CellInfoLte) servingCell;
+                ((CellInfoLte) servingCell).getCellIdentity();
+                ((CellInfoLte) servingCell).getCellSignalStrength();
+                return;
+        }
 
     }
 }

@@ -20,4 +20,5 @@
     <string name="lacValue">-</string>
     <string name="lac">LAC</string>
     <string name="networkOperator">Free</string>
+    <string name="cellState">-</string>
 </resources>

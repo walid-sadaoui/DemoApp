@@ -7,14 +7,14 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/servingCellCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@id/neighbourCellListHeaderCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,6 @@
                 android:text="@string/servingCell"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="20sp"
-                android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,11 +44,10 @@
                 android:layout_marginStart="8dp"
                 android:text="-"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@+id/title_text"
-                app:layout_constraintStart_toEndOf="@id/title_text"
-                app:layout_constraintTop_toTopOf="@+id/title_text" />
+                app:layout_constraintStart_toEndOf="@id/title_text" />
 
             <TextView
                 android:id="@+id/networkType"
@@ -58,11 +56,10 @@
                 android:layout_marginStart="8dp"
                 android:text="GSM"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="@+id/title_text"
-                app:layout_constraintStart_toEndOf="@+id/separator"
-                app:layout_constraintTop_toTopOf="@+id/title_text" />
+                app:layout_constraintBottom_toBottomOf="@+id/separator"
+                app:layout_constraintStart_toEndOf="@+id/separator" />
 
             <TextView
                 android:id="@+id/channel"
@@ -72,7 +69,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/arfcn"
                 app:layout_constraintBottom_toTopOf="@+id/channelValue"
-                app:layout_constraintEnd_toStartOf="@id/bsic"
+                app:layout_constraintEnd_toStartOf="@id/bsicNumber"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text" />
@@ -90,7 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/channel" />
 
             <TextView
-                android:id="@+id/bsic"
+                android:id="@+id/bsicNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bsic"
@@ -105,9 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/bsicValue"
-                app:layout_constraintEnd_toEndOf="@+id/bsic"
-                app:layout_constraintStart_toStartOf="@+id/bsic"
-                app:layout_constraintTop_toBottomOf="@id/bsic" />
+                app:layout_constraintEnd_toEndOf="@+id/bsicNumber"
+                app:layout_constraintStart_toStartOf="@+id/bsicNumber"
+                app:layout_constraintTop_toBottomOf="@id/bsicNumber" />
 
             <TextView
                 android:id="@+id/rxLev"
@@ -116,7 +113,7 @@
                 android:text="@string/rxLev"
                 app:layout_constraintBottom_toTopOf="@id/rxLevValue"
                 app:layout_constraintEnd_toStartOf="@id/c1"
-                app:layout_constraintStart_toEndOf="@id/bsic"
+                app:layout_constraintStart_toEndOf="@id/bsicNumber"
                 app:layout_constraintTop_toTopOf="@id/channel" />
 
             <TextView
@@ -184,7 +181,9 @@
                 android:id="@+id/mccValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:text="@string/mccValue"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/mcc"
                 app:layout_constraintStart_toStartOf="@+id/mcc"
                 app:layout_constraintTop_toBottomOf="@id/mcc" />
@@ -253,11 +252,86 @@
                 android:layout_marginStart="8dp"
                 android:text="@string/networkOperator"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@+id/networkType"
-                app:layout_constraintStart_toEndOf="@id/networkType"
-                app:layout_constraintTop_toTopOf="@+id/networkType" />
+                app:layout_constraintStart_toEndOf="@id/networkType" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/neighbourCellListHeaderCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/servingCellCardView">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/headerRxLev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/rxLev"
+                app:layout_constraintBottom_toBottomOf="@+id/headerBsic"
+                app:layout_constraintEnd_toStartOf="@id/headerC1"
+                app:layout_constraintTop_toTopOf="@+id/headerBsic" />
+
+            <TextView
+                android:id="@+id/headerBsic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/bsic"
+                app:layout_constraintBottom_toBottomOf="@+id/headerArfcn"
+                app:layout_constraintEnd_toStartOf="@id/headerRxLev"
+                app:layout_constraintTop_toTopOf="@+id/headerArfcn" />
+
+            <TextView
+                android:id="@+id/headerArfcn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/arfcn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/headerBsic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/headerC2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/c2"
+                app:layout_constraintBottom_toBottomOf="@+id/headerC1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/headerC1" />
+
+            <TextView
+                android:id="@+id/headerC1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/c1"
+                app:layout_constraintBottom_toBottomOf="@+id/headerRxLev"
+                app:layout_constraintEnd_toStartOf="@id/headerC2"
+                app:layout_constraintTop_toTopOf="@+id/headerRxLev" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
@@ -273,5 +347,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView" />
+        app:layout_constraintTop_toBottomOf="@id/neighbourCellListHeaderCardView">
+
+    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>
